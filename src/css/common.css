@@ -1,0 +1,164 @@
+#main_container {
+    /*height: 100vh;*/
+    padding-top: 135px;
+    display: flex;
+    justify-content: center;
+    order: 1;
+}
+
+
+/*-----로그인/회원가입*/
+
+.form_container{
+    width: 350px;
+    margin: 0 auto
+
+}
+
+.form_container .form{
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    padding: 0 40px 25px 40px;
+    margin-bottom: 30px;
+}
+
+
+.form label{
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.form input{
+    width: 100%;
+    background: 0 0;
+    border: 1px solid #efefef;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: #262626;
+    font-size: 14px;
+    padding: 7px 8px 7px;
+}
+
+.form p{
+    margin-bottom: 10px;
+}
+
+.form .submit_btn{
+    background: #3897f0;
+    border-color: #3897f0;
+    color: #fff;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 28px;
+    outline: none;
+    width: 100%;
+    padding: 0;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.bottom_box{
+    text-align: center;
+    /*height: 290px;*/
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    padding: 20px 40px 25px 40px;
+    /*display: flex;*/
+    /*align-items: center;*/
+}
+
+form .emailpass {
+    width: 80%;
+}
+
+.form .btn_con{
+    background: #3897f0;
+    border-color: #3897f0;
+    color: #fff;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 25px;
+    outline: none;
+    width: 17%;
+    padding: 0;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/*-----상점*/
+
+.shop_container{
+    width: 650px;
+    margin: 0 auto
+
+}
+
+.shop_container .form{
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    padding: 0 40px 25px 40px;
+    margin-bottom: 30px;
+}
+
+.form textarea{
+    width: 100%;
+    background: 0 0;
+    border: 1px solid #efefef;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: #262626;
+    font-size: 14px;
+    padding: 7px 8px 7px;
+    resize: none; 
+}
+
+.postmodal{
+    background : rgba(0,0,0,0.25);
+  
+    left:0;
+    top:0;
+    height:100%;
+    width:30%;
+}
+
+
+.form p{
+    padding-top: 5%;
+}
+
+
+/* 헤더 css */
+.navbar {
+    background-color: #2ac1bc;
+}
+
+/* 메인 */
+
+.item-list {
+    margin-bottom: -10px;
+}
+
+.item-list > .item {
+    width: 237px;
+    height: 170px;
+    margin: 10px;
+    margin-left: 25px;
+    border: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-maintext {
+    font-size: 23px;
+    margin: 0; /* 중앙 정렬을 위해 margin을 제거합니다 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
