@@ -78,14 +78,32 @@ const ManagerApproveList = () => {
 
     const handleApprove = async (id) => {
         try {
-            const response = await axios.post(`http://localhost:8080/admin/approve/${id}`);
+
+            // GET 요청: axios를 사용하여 GET 요청을 보내고, URL에 쿼리 파라미터를 포함시킬 수 있습니다.
+            // const response = await axios.get(`http://localhost:8080/admin/approve?owner_id=${id}`);
+            // 이 경우, owner_id가 URL의 쿼리 스트링으로 전달되어 Spring Boot의 @RequestParam으로 받을 수 있습니다.
+
+            const response = await axios.get('http://localhost:8080/admin/approve', {
+                params: { owner_id: id }
+            });
+
+            // POST 요청: POST 요청을 사용할 경우, FormData를 생성하여 요청 본문에 데이터를 포함시킬 수 있습니다.
+            // Spring Boot에서는 @RequestParam 대신 @RequestBody나 @ModelAttribute 등을 사용하여 요청 본문(body)의 데이터를 읽어올 수 있습니다.
+           
+       
             if (response.status === 200) {
-                // 승인 후 데이터 갱신
-                setData((prevData) =>
-                    prevData.map((item) =>
-                        item.id === id ? { ...item, approval_status: 1 } : item
-                    )
+                // 승인 후 데이터 갱신 새로고침 해야 업데이트
+                // setData((prevData) =>
+                //     prevData.map((item) =>
+                //         item.id === id ? { ...item, approval_status: 1 } : item
+                //     )
+                // );
+
+                // 승인 후 데이터 바로 업데이트 
+                const updatedData = data.map(item =>
+                    item.owner_id === id ? { ...item, approval_status: 1 } : item
                 );
+                setData(updatedData);
             }
         } catch (error) {
             console.error("승인 실패", error);
@@ -114,9 +132,9 @@ const ManagerApproveList = () => {
                             <td>{item.modification_date}</td>
                             <td>{item.approval_status === 1 ? "1" : "0"}</td>
                             <td>
-                                {item.approval_status === 0 && (
-                                    <Button onClick={() => handleApprove(item.id)}>승인</Button>
-                                )}
+                                {item.approval_status === 0 ? (
+                                    <Button onClick={() => handleApprove(item.owner_id)}>승인</Button>
+                                ) : "완료"}
                             </td>
                         </tr>
                     ))}

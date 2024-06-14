@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const UserMain = () => {
     const navigate = useNavigate();    
@@ -20,6 +20,26 @@ const UserMain = () => {
         <div>
             <button onClick={userlogin}>로그인</button>
             <button onClick={userjoiin}>회원가입</button>
+
+            <div id="main_container">
+
+            <Link class="item-list " to={'/UserMenuCaList'}  state={{ca:1}}>
+                <div class="item ">
+                    <p class="item-maintext">한식</p>
+                </div>
+            </Link>
+            <div class="item-list" >
+                <div class="item">
+                    <p class="item-maintext">치킨</p>
+                </div>
+            </div>
+            <div class="item-list" >
+                <div class="item">
+                    <p class="item-maintext">중국집</p>
+                </div>
+            </div>
+                
+            </div>
         </div>
     );
 };

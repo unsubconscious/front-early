@@ -3,6 +3,8 @@ npm i react-router-dom
 npm install axios
 npm install react-daum-postcode
 npm install react-bootstrap bootstrap
+npm install -S react-router-bootstrap
+npm install react-intersection-observer --save
 
 스프링
 

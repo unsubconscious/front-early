@@ -162,3 +162,64 @@ form .emailpass {
     margin: 0; /* 중앙 정렬을 위해 margin을 제거합니다 */
     text-align: center; /* 텍스트 중앙 정렬 */
 }
+
+/* 업체 */
+
+.menu_list{
+    margin-right: 1%;
+
+}
+
+#menu_container {
+    /*height: 100vh;*/
+    padding-top: 135px;
+    display: flex;
+    justify-content: center;
+    order: 1;
+}
+
+input[readOnly] {
+    background-color: #e9ecef; /* 비활성화된 것처럼 보이도록 회색 배경 */
+    cursor: not-allowed;      /* 커서를 '금지' 아이콘으로 변경 */
+}
+
+/* 조회 */
+
+.big-column {
+    width: 100%;
+
+}
+
+.item-card {
+    width: 490px;
+    height: 100px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
+    
+}
+
+.item-image {
+    position: relative;
+    top: 13px;
+    left: 7px;
+}
+
+.item-info {
+    margin-top: 18px;
+    margin-left: 15px;
+}
+
+.item-info>p {
+    line-height: 15px;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.container-custom {
+    width: 1000px;
+    position: relative;
+    left: 50%;
+    margin-left: -500px;
+    margin-top: 80px;
+}

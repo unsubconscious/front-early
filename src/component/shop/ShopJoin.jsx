@@ -29,6 +29,8 @@ const ShopJoin = () => {
 
     //후에 해야할거 x,y 좌표 넘기기와 주소받아오기
 
+
+    //추후  jwt 아이딕값 넘겨야함
     const shopjoin=async(e)=>{
         e.preventDefault();
         handleSearch()
