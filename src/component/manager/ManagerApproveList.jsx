@@ -90,7 +90,7 @@ const ManagerApproveList = () => {
             // POST 요청: POST 요청을 사용할 경우, FormData를 생성하여 요청 본문에 데이터를 포함시킬 수 있습니다.
             // Spring Boot에서는 @RequestParam 대신 @RequestBody나 @ModelAttribute 등을 사용하여 요청 본문(body)의 데이터를 읽어올 수 있습니다.
            
-       
+            
             if (response.status === 200) {
                 // 승인 후 데이터 갱신 새로고침 해야 업데이트
                 // setData((prevData) =>

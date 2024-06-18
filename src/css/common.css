@@ -137,7 +137,7 @@ form .emailpass {
 
 /* 헤더 css */
 .navbar {
-    background-color: #2ac1bc;
+    background-color: #9d9de5;
 }
 
 /* 메인 */
@@ -191,35 +191,93 @@ input[readOnly] {
 }
 
 .item-card {
-    width: 490px;
-    height: 100px;
+    width: 400px;
+    height: 80px;
+    border: 1px solid #e6e6e6;
     background-color: #ffffff;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
     margin-left: 20px;
+    display: flex;
+    align-items: center;
+
+
     
 }
 
 .item-image {
     position: relative;
-    top: 13px;
-    left: 7px;
+
+}
+.item-info{
+    padding-left: 5px;
+}
+.item-info p {
+
+
+    justify-content: center;
+}
+#shop_container {
+    /*height: 100vh;*/
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    order: 1;
 }
 
-.item-info {
-    margin-top: 18px;
-    margin-left: 15px;
+#detail_container {
+    /*height: 100vh;*/
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    order: 1;
 }
 
-.item-info>p {
-    line-height: 15px;
-    font-size: 15px;
-    margin-bottom: 10px;
+/* 업체 조회상세페이지 */
+
+.mv {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.container-custom {
-    width: 1000px;
-    position: relative;
-    left: 50%;
-    margin-left: -500px;
-    margin-top: 80px;
+.container {
+    display: flex;
+    width: 80%;
+    height: 80%;
+    /* border: 1px solid black; */
+}
+
+.left-sections {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+}
+
+.section {
+    border: 1px solid black;
+    padding: 20px;
+    margin: 10px;
+    /* text-align: center; */
+}
+.basketto{
+    text-align: center;
+}
+
+#c {
+    flex: 1;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.basket{
+    padding: 5px;
+
+}
+
+.basket-data{
+    display: flex;
 }

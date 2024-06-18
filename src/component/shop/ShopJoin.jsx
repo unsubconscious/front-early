@@ -5,8 +5,11 @@ import AddressP from './AddressP';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-
+import { useLocation } from 'react-router-dom';
 const ShopJoin = () => {
+  const location = useLocation();
+  //넘어온값
+  const id = location.state?.id;
     
   const navigate = useNavigate();
 
@@ -43,6 +46,7 @@ const ShopJoin = () => {
         formData.append("storeX", coordinates[0].x);
         formData.append("storeY", coordinates[0].y);
         formData.append("category", category);
+        formData.append("id", id);
         
 
         try{
@@ -81,29 +85,27 @@ const ShopJoin = () => {
 
     //x,y좌표 받아오기
 
-  const handleSearch = async () => {
+    const handleSearch = async () => {
 
-    console.log(address)
-    try {
-      const response = await axios.get('https://dapi.kakao.com/v2/local/search/address.json', {
-        headers: {
-          Authorization: 'KakaoAK a7c586e0ddf3d0e749012d67cfc6dcdd'
-        },
-        params: {
-          query: address.address
-        }
-      });
-
-      const coords = response.data.documents.map(doc => ({
-        x: doc.x,
-        y: doc.y
-      }));
-
-      setCoordinates(coords);
-    } catch (error) {
-      console.error('Error fetching data from Kakao API:', error);
-    }
-  };
+      console.log(address)
+      try {
+        const response = await axios.get('/api/kakao/v2/local/search/address.json', {
+          params: {
+            query: address.address,
+          },
+        });
+  
+        const coords = response.data.documents.map(doc => ({
+          x: doc.x,
+          y: doc.y
+        }));
+  
+        setCoordinates(coords);
+      } catch (error) {
+        console.error('Error fetching data from Kakao API:', error);
+      }
+    };
+  
 
     
     return (
@@ -142,6 +144,7 @@ const ShopJoin = () => {
                     <option value="1">한식</option>
                     <option value="2">치킨</option>
                     <option value="3">중국집</option>
+                    <option value="4">일식</option>
                   </Form.Select>
                 </p>
 
@@ -168,14 +171,13 @@ const ShopJoin = () => {
       </ul>
 
 
+      </div>
 
-</div>
+    </div>
 
-</div>
-
-</div>
+  </div>
             
-        </div>
+</div>
     );
 };
 

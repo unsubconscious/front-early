@@ -10,22 +10,32 @@ const UserJoin = () => {
     const [email,setEmail] = useState("")
     const [password,setPassword]=useState("")
 
-
-
+    
     //회원가입
     const joinClick= (e) => {
         e.preventDefault();
-       axios.post("/user/join/~~",{
-            name:name,
-            password:password,
-            email:email
-
-        }).then(rs => {
+        const signupData = {
+            email: email,
+            password: password,
+            name: name
+            
+          };
+          
+          // JWT 토큰을 설정합니다.
+          const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTg3OTQyNTMsInVubyI6IjEiLCJ1c2VyIiwicm9sIjpbIlJPTEVfVVNFUiJdfQ.FN8RjlH7_xcvJxGUgN1jAfUOG3i5T5BDiB30cmHS6psbUtpPGxuCmquTamtQmcGHir5n1zQygWbPcr_t28ydHA';
+          
+          // POST 요청을 보냅니다.
+          axios.post('http://localhost:8080/user', signupData, {
+            headers: {
+              'Authorization': `${token}`
+            }
+          })
+        .then(rs => {
             const response = rs.data;
-            console.log("회원가입");
+            console.log(rs.data);
 
             // 회원가입 성공 여부 확인
-            if (response == 1) {
+            if (response == "SUCCESS") {
                 navigate('/');
             } else {
                 alert("가입 실패");
@@ -58,17 +68,17 @@ const UserJoin = () => {
                             <input type="email" id="user_email"  onChange={(e)=>setEmail(e.target.value)}/>
                         </p>
 
-                    <button  class="submit_btn">이메일 인증하기</button>
+                    {/* <button  class="submit_btn">이메일 인증하기</button>
                     {emailPass==true && <p class="login_user_password"> <label for="user_password">인증번호 확인:
                     </label><input type="text"  class="emailpass" /> <button  class="btn_con">확인</button></p>}
-    
+     */}
                         <p class="user_password">
                             <label for="user_password">비밀번호</label>
                             <input type="password" id="user_password" onChange={(e)=>setPassword(e.target.value)}/>
                         </p>
  
     
-                        <input type="submit" id="submit_btn" value="회원가입" class="submit_btn" />
+                        <input type="submit" id="submit_btn" value="회원가입" class="submit_btn" onClick={joinClick}/>
                     </form>
     
     

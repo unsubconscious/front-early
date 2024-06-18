@@ -7,7 +7,10 @@ import { BrowserRouter } from 'react-router-dom';
 import  Path from './routerPath/Path.jsx';
 import { Flag } from './flag/Flag.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from "axios";
 
+axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.withCredentials = true;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 

@@ -3,18 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 import Header from '../commom/Header';
 import Card from 'react-bootstrap/Card';
-
+import { useContext } from "react";
+import { AdminFlagContext } from "../../flag/Flag.jsx";
+import { useCookies } from 'react-cookie';
 const Main = () => {
     const navigate = useNavigate();
-
-    //연결테스트
+    const {user,setUser}=useContext(AdminFlagContext)
+    // const [cookies] = useCookies(['jwtToken']);
+   
+    //유저인증테스트
 
     const onButtonClick=async(e) =>{
         e.preventDefault();
-
+        // const token = cookies.jwtToken;
+        const token = user;
         try{
-            const rs=await axios.get("http://localhost:8080/api/hello")
-            console.log(rs.data)
+            const response = await axios.get('http://localhost:8080/api/api/userinfo', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            console.log(response.data)
+            console.log(response.data.user_id)
+        
         }catch(error){
             console.log(error)
         }
@@ -67,7 +78,7 @@ const Main = () => {
         </div>
 
 
-            <button onClick={onButtonClick}>연결테스트</button>
+            <button onClick={onButtonClick}>유저인증테스트</button>
             
         </div>
         </div>

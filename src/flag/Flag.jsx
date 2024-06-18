@@ -8,7 +8,7 @@ export const AdminFlagContext = createContext({});
 export const Flag =(props) => {
 
     const {children}=props
-    const [user, setUser] = useState(false) //로그인 여부
+    const [user, setUser] = useState("") //로그인 여부
     const [userDate, setUserDate] = useState() // 현재 유저 정보
 
 

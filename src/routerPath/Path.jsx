@@ -14,7 +14,7 @@ import ShopMenuList from '../component/shop/ShopMenuList';
 import ShopMenuedit from '../component/shop/ShopMenuedit';
 import UserMenuCaList from '../component/user/UserMenuCaList';
 import UserShopDetail from '../component/user/UserShopDetail';
-
+import ShopOrder from '../component/shop/ShopOrder';
 const Path = () => {
     return (
         <Routes>
@@ -32,6 +32,7 @@ const Path = () => {
             <Route path="/ShopMenuedit" element={<ShopMenuedit />} />
             <Route path="/UserMenuCaList" element={<UserMenuCaList />} />
             <Route path="/UserShopDetail" element={<UserShopDetail />} />
+            <Route path="/ShopOrder" element={<ShopOrder />} />
             
         </Routes>
         

@@ -1,0 +1,52 @@
+/* 업체 나열*/
+a {
+  color: black;
+}
+a:hover {
+  text-decoration: none;
+}
+.navbar {
+  background-color: #1eb845;
+}
+
+.container-custom {
+    margin: 20px;
+}
+
+.store-count {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.item-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+}
+
+.item-image img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.special-tags .badge {
+    margin-right: 5px;
+}
+
+.pd2 {
+    margin-left: 10px;
+}
+
+
+
+/* 장바구니 */
+
+.basket-header {
+  background-color: #1eb845;
+}
+

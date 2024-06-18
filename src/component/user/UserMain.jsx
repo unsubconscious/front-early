@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Header from '../commom/Header';
 
 const UserMain = () => {
+    const [location, setLocation] = useState({ latitude: null, longitude: null });
+    const [error, setError] = useState(null);
+
+    
     const navigate = useNavigate();    
     const userlogin=(e)=>{
         e.preventDefault()
@@ -9,21 +14,48 @@ const UserMain = () => {
 
     }
 
-    const userjoiin=(e)=>{
+    const userjoin=(e)=>{
         e.preventDefault()
         navigate("/UserJoin")
 
     }
 
+    //현재 위치 확인 기능 
+    useEffect(() => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              setLocation({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              });
+              setError(null);
+            },
+            (error) => {
+              setError(error.message);
+            },
+            {
+              enableHighAccuracy: true,
+              timeout: 5000,
+              maximumAge: 0,
+            }
+          );
+        } else {
+          setError('Geolocation is not supported by this browser.');
+        }
+      }, []);
+    
+
 
     return (
         <div>
+            <Header></Header>
             <button onClick={userlogin}>로그인</button>
-            <button onClick={userjoiin}>회원가입</button>
+            <button onClick={userjoin}>회원가입</button>
 
             <div id="main_container">
 
-            <Link class="item-list " to={'/UserMenuCaList'}  state={{ca:1}}>
+            <Link class="item-list " to={'/UserMenuCaList'}  state={{ca:1,y:location.latitude,x:location.longitude}}>
                 <div class="item ">
                     <p class="item-maintext">한식</p>
                 </div>
@@ -40,6 +72,17 @@ const UserMain = () => {
             </div>
                 
             </div>
+
+            <h1>User Location</h1>
+      {error ? (
+        <p>Error: {error}</p>
+      ) : (
+        <div>
+          <p>Latitude Y: {location.latitude}</p>
+          <p>Longitude X: {location.longitude}</p>
+        </div>
+      )}
+
         </div>
     );
 };
