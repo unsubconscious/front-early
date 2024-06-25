@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Nav from 'react-bootstrap/Nav';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,25 +10,27 @@ import { CompatClient, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import TabMenu from '../commom/TabMenu.jsx';
 import Header from '../commom/Header.jsx';
+import { useWebSocket  } from "../../flag/WebSocketContext.jsx";
 
 const UserShopDetail = () => {
+    const navigate = useNavigate();
     const location = useLocation();
-    const datas = location.state.data;
+    let datas = location.state.data || -1;
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [basket, setBasket] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
-    const { user, setUser } = useContext(AdminFlagContext);
-    const [stompClient, setStompClient] = useState(null);
+    const { user, setUser, user_x, setX, user_y, setY } = useContext(AdminFlagContext);
     const [mes, setMes] = useState("");
     const [useid, setUseid] = useState("");
     const [username, setUserName] = useState("");
-    const[email,setEmail]=useState("")
+    const [email, setEmail] = useState("");
+    const { stompClient, messages, sendMessage, setMessages, connected } = useWebSocket();
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log(datas.store_id)
+            console.log(datas.store_id);
             try {
                 const rs = await axios.get("http://localhost:8080/search/menuList", {
                     params: { id: datas.store_id }
@@ -43,15 +45,13 @@ const UserShopDetail = () => {
             }
         };
 
-        //이메일 탐색
         const emailData = async () => {
             try {
                 const rs = await axios.get("http://localhost:8080/search/email_shop", {
-                    params: { id: datas.owner_id}
+                    params: { id: datas.owner_id }
                 });
-                setEmail(rs.data)
-                console.log("이메일탐색",rs.data)
-
+                setEmail(rs.data);
+                console.log("이메일탐색", rs.data);
             } catch (e) {
                 setError("연결실패");
                 console.log("연결실패", e);
@@ -79,26 +79,6 @@ const UserShopDetail = () => {
         fetchData();
         usedata();
         emailData();
-        const socket = new SockJS(`http://localhost:8080/ws?token=Bearer ${user}`);
-        const client = Stomp.over(socket);
-
-        client.connect({ Authorization: `Bearer ${user}` }, () => {
-            client.subscribe('/user/topic/sendMessage', (msg) => {
-                console.log("응답 메세지");
-                console.log(msg);
-                const newMessage = JSON.parse(msg.body);
-                setMes(newMessage);
-            });
-            setStompClient(client);
-        });
-
-        return () => {
-            if (client) {
-                client.disconnect(() => {
-                    console.log('Disconnected');
-                });
-            }
-        };
     }, [datas]);
 
     useEffect(() => {
@@ -112,7 +92,8 @@ const UserShopDetail = () => {
 
     useEffect(() => {
         const handleMesUpdate = async () => {
-            if (mes.content === "true") {
+            if (messages.content === "true" && totalPrice>0) {
+                console.log(messages.content);
                 const orderDetails = JSON.stringify(basket);
                 console.log("주문클릭");
 
@@ -121,27 +102,32 @@ const UserShopDetail = () => {
                     storeId: datas.store_id,
                     orderDetails: orderDetails,
                     totalPrice: totalPrice,
+                    user_x: user_x,
+                    user_y: user_y
                 };
 
                 try {
                     const response = await axios.post('http://localhost:8080/search/order', orderData);
                     console.log('Order response:', response.data);
                     if (response.data == 1) {
+                        setMessages("");
                         alert("주문 성공");
+                        navigate('/');
                     }
                 } catch (error) {
                     console.error('Order error:', error);
                 }
             } else {
-                alert("현재 음식점이 열려있지 않습니다")
+                // alert("현재 음식점이 열려있지 않습니다");
                 console.log("주문 실패");
+                setMessages("");
             }
         };
 
-        if (mes.content) {
+        if (messages.content) {
             handleMesUpdate();
         }
-    }, [mes, basket, datas.store_id, totalPrice, useid]);
+    }, [messages, basket, datas.store_id, totalPrice, useid]);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
@@ -180,11 +166,18 @@ const UserShopDetail = () => {
 
     const handleOrder = async () => {
         console.log("유저아이디", username);
-        if (stompClient) {
-            //from 에 나중에 이 상점 주인 아이디를 넣어야 하는데 이때 앞에서 상점 주인 아이디(이메일을)까지 받아와야한다.
+        if (!user) {
+            alert("로그인해주세요");
+            return;
+        }
+        if (connected) {
             stompClient.send('/app/sendMessage', {}, JSON.stringify({ from: email, content: "message" }));
+        } else {
+            alert("잘못된접근입니다.");
+            navigate('/');
         }
     };
+
 
     return (
         <div>
@@ -206,19 +199,15 @@ const UserShopDetail = () => {
                         <div className="section" id="b">
                             <Nav fill variant="tabs" defaultActiveKey="/home">
                                 <Nav.Item>
-                                    <Nav.Link href="#">Active</Nav.Link>
+                                    <Nav.Link href="#"><Link to={`/UserShopDetail`} state={{ data: datas }}>메뉴</Link></Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="link-1">Loooonger NavLink</Nav.Link>
+                                    <Nav.Link eventKey="link-1"><Link to={`/UserShopComment`} state={{ data: datas }}>댓글</Link></Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="link-2">Link</Nav.Link>
+                                    <Nav.Link eventKey="link-2"><Link to={`/UserShopIntroduce`} state={{ data: datas }}>매장소개</Link></Nav.Link>
                                 </Nav.Item>
-                                <Nav.Item>
-                                    <Nav.Link eventKey="disabled" disabled>
-                                        Disabled
-                                    </Nav.Link>
-                                </Nav.Item>
+
                             </Nav>
                             {data && data.map(array => (
                                 <UserShopDetailMenu key={array.menuName} data={array} plus={handlePlus} />

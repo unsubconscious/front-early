@@ -1,6 +1,7 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FaUserCircle } from 'react-icons/fa'; // Using react-icons for the account circle icon
+import { Link } from 'react-router-dom';
 
 const UserInfo = () => {
   return (
@@ -10,14 +11,9 @@ const UserInfo = () => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">내 정보</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">장바구니</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">포인트</Dropdown.Item>
-        <Dropdown.Item href="#/action-4">쿠폰</Dropdown.Item>
-        <Dropdown.Item href="#/action-5">찜한 가게</Dropdown.Item>
-        <Dropdown.Item href="#/action-6">결재 내역</Dropdown.Item>
-        <Dropdown.Item href="#/action-7">리뷰관리</Dropdown.Item>
-        <Dropdown.Item href="#/action-8">고객센터</Dropdown.Item>
+        <Dropdown.Item as={Link} to="/MypageMain">내 정보</Dropdown.Item>
+        <Dropdown.Item as={Link} to="/MyorderDetails">주문내역</Dropdown.Item>
+        <Dropdown.Item as={Link} to="/MypageMain">리뷰관리</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

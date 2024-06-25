@@ -21,7 +21,6 @@ const ManagerApprove = () => {
                     <h1>업체 승인 목록</h1>
                     <ManagerApproveList /> 
     
-
                     </Col>
                 </Row>
             </Container>

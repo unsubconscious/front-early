@@ -9,5 +9,6 @@ npm install react-intersection-observer --save
 npm install http-proxy-middleware
 npm i react-cookie
 npm install @stomp/stompjs sockjs-client
+npm install recharts
 스프링
 

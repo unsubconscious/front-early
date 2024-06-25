@@ -5,7 +5,18 @@
     justify-content: center;
     order: 1;
 }
+#main_container2 {
+    /*height: 100vh;*/
+    padding-top: 135px;
+    justify-content: center;
+    order: 1;
+}
 
+.from_padding {
+
+    padding-top: 15px;
+
+}
 
 /*-----로그인/회원가입*/
 

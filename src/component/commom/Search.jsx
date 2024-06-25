@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/search.css';
-
-const Search = ({ onSearch }) => {
+import { Link, useNavigate } from 'react-router-dom';
+const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
-
+  const navigate = useNavigate();  
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
   const handleSearch = (event) => {
-    event.preventDefault();
-    onSearch(searchTerm);
+    event.preventDefault(event);
+    navigate("/UserSearchList",{state : {searchTerm:searchTerm}})
+
   };
 
   return (

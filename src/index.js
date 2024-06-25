@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import  Path from './routerPath/Path.jsx';
 import { Flag } from './flag/Flag.jsx';
+import { WebSocketProvider  } from './flag/WebSocketContext.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 
@@ -16,7 +17,9 @@ root.render(
 
   <BrowserRouter>
   <Flag>
+    <WebSocketProvider>
     <Path />
+  </WebSocketProvider>
   </Flag>
   </BrowserRouter>
   

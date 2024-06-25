@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../commom/Header';
-
+import { useContext } from "react";
+import { AdminFlagContext } from "../../flag/Flag.jsx";
 const UserMain = () => {
+  const {user_x,setX,user_y,setY}=useContext(AdminFlagContext)
     const [location, setLocation] = useState({ latitude: null, longitude: null });
     const [error, setError] = useState(null);
 
@@ -22,27 +24,29 @@ const UserMain = () => {
 
     //현재 위치 확인 기능 
     useEffect(() => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              setLocation({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-              });
-              setError(null);
-            },
-            (error) => {
-              setError(error.message);
-            },
-            {
-              enableHighAccuracy: true,
-              timeout: 5000,
-              maximumAge: 0,
-            }
-          );
-        } else {
-          setError('Geolocation is not supported by this browser.');
-        }
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+            setX(position.coords.longitude)
+            setY(position.coords.latitude)
+            setError(null);
+          },
+          (error) => {
+            setError(error.message);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0,
+          }
+        );
+      } else {
+        setError('Geolocation is not supported by this browser.');
+      }
       }, []);
     
 

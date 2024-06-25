@@ -4,6 +4,9 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
+import Header from './headside/Header';
+import Sidebar from './headside/Sidebar';
 
 //메뉴수정
 const ShopMenuedit = () => {
@@ -54,8 +57,16 @@ const ShopMenuedit = () => {
 
 
     return (
-
-    <div id="main_container">
+        <div>
+                
+        <Header />
+        <Container fluid>
+            <Row>
+                <Col xs={2} id="sidebar-wrapper">
+                    <Sidebar />
+                </Col>
+                <Col xs={10} id="page-content-wrapper">
+                <div id="main_container">
     
     <div class="shop_container">
 
@@ -77,7 +88,7 @@ const ShopMenuedit = () => {
                         onChange={(e)=>setPrice(e.target.value)}
                         onKeyDown={(e) => {
                             // 허용되는 키 코드: 0~9, 백스페이스(8), 화살표(37~40), 탭(9)
-                            const allowedKeys = /[0-9\b]/;
+                            const allowedKeys = /[0-9,"Backspace"\b]/;
                             if (!allowedKeys.test(e.key)) {
                                 e.preventDefault();
                             }
@@ -98,6 +109,15 @@ const ShopMenuedit = () => {
         </div>
         </div>
         </div>
+
+                </Col>
+            </Row>
+        </Container>
+
+
+    </div>
+
+    
     );
 };
 

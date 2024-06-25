@@ -16,17 +16,17 @@ const ShopMain = () => {
     const navigate = useNavigate();    
     //이것또한 나중에 아이디 값으로 조회해서 역할이 상점 주인일경우에만 넘어가도록 요청 api를 추가한다.
     const [cookies] = useCookies(['jwtToken']);
+    //현재로그인한 아이디
     const [userDate,setUserDate]=useState("")
     //상점아이디
-    const[shopid,setShopid]=useState("")
-    const {user,setUser}=useContext(AdminFlagContext)
+    const {user,setUser,userId,setUserId,shopId,setShopid}=useContext(AdminFlagContext)
     //쿠키에 저장된 jwt를 기반으로 아이디값 받아오기
     useEffect(() => {
         const fetchUserInfo = async () => {
 
             const token = user
             console.log(token)
-            console.log("jwt 불러오는ㄴ")
+            console.log("jwt 불러오는 중")
             try {
                 const response = await axios.get('http://localhost:8080/api/api/userinfo', {
                     headers: {
@@ -35,19 +35,21 @@ const ShopMain = () => {
                 });
                 console.log(response.data);
                 console.log(response.data.user_id);
-                setUserDate(response.data.user_id)
+                // setUserDate(response.data.user_id)
+                //유저아이디를 플래그에 저장
+                setUserId(response.data.user_id)
             } catch (error) {
                 console.log(error);
             }
         };
 
         fetchUserInfo();
-    }, [cookies]);
+    }, [user]);
     
     const shopjoin=(e)=>{
     e.preventDefault()
     if(userDate){
-        navigate("/ShopJoin",{state : {id:userDate}})
+        navigate("/ShopJoin",{state : {id:userId}})
     }
     else{
         alert("로그인해주세요")
@@ -64,7 +66,7 @@ const shoppMenu=async(e)=>{
     //상점 아이디값이 받아오는
     try {
         const rs = await axios.get("http://localhost:8080/store/menuRs", {
-            params: { id: userDate }
+            params: { id: userId }
         });
         if (rs.status === 200) {
             console.log(rs.data)
@@ -85,7 +87,7 @@ const shoppMenu=async(e)=>{
         //상점 아이디값이 받아오는
     
 
-            navigate("/ShopOrder", {state : {id:userDate}})
+            navigate("/ShopOrder", {state : {id:userId}})
 
 
 
@@ -98,21 +100,15 @@ const shoppMenu=async(e)=>{
             <Container fluid>
                 <Row>
                     <Col xs={2} id="sidebar-wrapper">
-                        <Sidebar id={userDate}/>
+                        <Sidebar id={userId}/>
                     </Col>
                     <Col xs={10} id="page-content-wrapper">
-                        <div style={{ padding: '20px' }}>
-                            <button onClick={shopjoin} style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>업체등록하기</button>
-                            <button onClick={shoppMenu} style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>메뉴목록</button>
-                            <tr/>
-                            // 여기서는 등록이 되는데 사이드바에서는 등록이 안됨
-                        </div>
+                  
 
                     </Col>
                 </Row>
             </Container>
-    
-            <button onClick={shopOrder}>주문</button>
+
 
         </div>
     );

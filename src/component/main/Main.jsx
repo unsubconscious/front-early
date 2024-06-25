@@ -6,12 +6,16 @@ import Card from 'react-bootstrap/Card';
 import { useContext } from "react";
 import { AdminFlagContext } from "../../flag/Flag.jsx";
 import { useCookies } from 'react-cookie';
+import { useWebSocket  } from "../../flag/WebSocketContext.jsx";
+
 const Main = () => {
     const navigate = useNavigate();
-    const {user,setUser}=useContext(AdminFlagContext)
+    const {user,setUser,userInfo, setUserInfo}=useContext(AdminFlagContext)
     // const [cookies] = useCookies(['jwtToken']);
-   
+    const { stompClient, messages, sendMessage ,setMessages} = useWebSocket();
+   setMessages("")
     //유저인증테스트
+    
 
     const onButtonClick=async(e) =>{
         e.preventDefault();
@@ -54,6 +58,12 @@ const Main = () => {
 
     }
 
+    //라이더 페이지이동
+    const riderbutton=(e)=>{
+        e.preventDefault()
+       navigate("/RiderMain")
+
+    }
 
     return (
         <div>
@@ -74,6 +84,12 @@ const Main = () => {
         <div class="item-list" onClick={managerbutton}>
             <div class="item">
                 <p class="item-maintext">관리자 페이지</p>
+            </div>
+        </div>
+
+        <div class="item-list" onClick={riderbutton}>
+            <div class="item">
+                <p class="item-maintext">라이더 페이지</p>
             </div>
         </div>
 
